@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html lang="en">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>My application</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     </head>
     <body>
-        <div>TODO write content</div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Static application example</a>
+                </div>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Welcome to my sample project</h1>
+                <p>You are actually running an apache webserver embeding this static web application. For more information about this container and how to add your own code instead of this message, please read the following links.</p>
+                <p>
+                    <a class="btn btn-primary btn-lg"href="https://github.com/startxfr/docker-images/tree/master/Services/apache" target="_blank" role="button">Documentation</a>
+                    <a class="btn btn-primary btn-lg"href="https://github.com/startxfr/docker-images-example-apache" target="_blank" role="button">Example documentation</a>
+                    <a class="btn btn-primary btn-lg"href="https://github.com/startxfr/docker-images" target="_blank" role="button">docker-images project</a>
+                </p>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <p>&copy; 2018 - <a href="https://github.com/startxfr" target="_blank">STARTX</a> - <a href="https://www.startx.fr" target="_blank">STARTX Dev Team</a></p>
+        </footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </body>
 </html>
