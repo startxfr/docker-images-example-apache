@@ -1,4 +1,5 @@
 <img align="right" src="https://raw.githubusercontent.com/startxfr/docker-images/master/travis/logo-small.svg?sanitize=true">
+
 # docker-images-example-apache
 
 
@@ -22,7 +23,8 @@ sleep 30 && oc get all
 
 - **Initialize** a project
   ```bash
-  oc new-project startx-example-apache
+  export MYAPP=myapp
+  oc new-project ${MYAPP}
   ```
 - **Add template** to the project service catalog
   ```bash
@@ -30,9 +32,9 @@ sleep 30 && oc get all
   ```
 - **Generate** your current application definition
   ```bash
-  export MYAPP=myapp
+  export MYVERSION=0.1
   oc process -n startx-example-apache -f startx-apache-build-template \
-      -p APP_NAME=${MYAPP} \
+      -p APP_NAME=v${MYVERSION} \
       -p APP_STAGE=example \
       -p BUILDER_TAG=latest \
       -p SOURCE_GIT=https://github.com/startxfr/docker-images-example-apache.git \
