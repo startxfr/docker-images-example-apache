@@ -5,54 +5,90 @@ Example of a web application to use with startx s2i builder [startx/sv-apache](h
 ## Docker OS Images : APACHE
 
 Startx apache is a base container used for web services and applications published in [startx Dockerhub registry](https://hub.docker.com/u/startx/sv-apache). 
-[Read startx apache image guideline](https://github.com/startxfr/docker-images/blob/master/Services/apache/README.md) for more information on how to use this image.
+**[Read startx apache image guideline](https://github.com/startxfr/docker-images/blob/master/Services/apache/README.md)** for more information on how to use this image.
 
-## Running this example in OKD (Openshift)
+## Running this example in OKD (aka Openshift)
 
-- Create a openshift project
+### Create a sample application
+
+```bash
+# Create a openshift project
+oc new-project startx-example-apache
+# start a new application (build and run)
+oc process -f https://raw.githubusercontent.com/startxfr/docker-images/master/Services/apache/openshift-template-build.yml \
+    -p APP_NAME=myapp \
+| oc create -f -
+# Watch when resources are available
+sleep 10 && oc get all
+```
+
+### Create a personalized application
+
+- **Initialize** a project
   ```bash
   oc new-project startx-example-apache
   ```
-- Add build template to the project service catalog
+- **Add template** to the project service catalog
   ```bash
-  oc create -f https://raw.githubusercontent.com/startxfr/docker-images/master/Services/apache/openshift-template-build.yml
+  oc create -f https://raw.githubusercontent.com/startxfr/docker-images/master/Services/apache/openshift-template-build.yml -n startx-example-apache
   ```
-- start a new application (build and run)
+- **Generate** your current application definition
   ```bash
-  oc process -f startx-apache-build-template \
+  oc process -n startx-example-apache -f startx-apache-build-template \
       -p APP_NAME=myapp \
-  | oc create -f -
+      -p APP_STAGE=example \
+      -p BUILDER_TAG=latest \
+      -p SOURCE_GIT=https://github.com/startxfr/docker-images-example-apache.git \
+      -p SOURCE_BRANCH=master \
+      -p MEMORY_LIMIT=256Mi \
+  > ./myapp.definitions.yml
+  ```
+- **build and run** your application
+  ```bash
+  oc create -f ./myapp.definitions.yml -n startx-example-apache
+  ```
+- **Test** your application
+  ```bash
+  oc describe route -n startx-example-apache
+  curl http://<url-route>
   ```
 
-## Running this example with s2i
+## Running this example with source-to-image (aka s2i)
 
-### sample application
+### Create a sample application
 
 ```bash
 # Build the application
 s2i build https://github.com/startxfr/docker-images-example-apache startx/sv-apache startx-apache-sample
 # Run the application
 docker run --rm -d -p 8777:8080 startx-apache-sample
+# Test the sample application
+curl http://localhost:8777
 ```
 
-### Personalized application
+### Create a personalized application
 
-- Create a project directory
+- **Initialize** a project directory
   ```bash
   git clone https://github.com/startxfr/docker-images-example-apache.git apache-myapp
   cd apache-myapp
+  rm -rf .git
   ```
-- Create a personalized page
+- **Develop** and create a personalized page
   ```bash
   cat << "EOF"
   <html><head></head><body><h1>My Web Application</h1></body></html>
   EOF > index.html
   ```
-- Build your current code with startx image as an s2i builder
+- **Build** your current application with startx apache builder
   ```bash
   s2i build . startx/sv-apache:latest startx-apache-myapp
   ```
-- Run a sample application and test it
+- **Run** your application and test it
   ```bash
   docker run --rm -d -p 8777:8080 startx-apache-myapp
+  ```
+- **Test** your application
+  ```bash
+  curl http://localhost:8777
   ```
