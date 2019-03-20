@@ -1,6 +1,6 @@
 <img align="right" src="https://raw.githubusercontent.com/startxfr/docker-images/master/travis/logo-small.svg?sanitize=true">
-
 # docker-images-example-apache
+
 
 Example of a web application using the startx s2i builder [startx/sv-apache](https://hub.docker.com/r/startx/sv-apache) 
 **[Read startx apache image guideline](https://github.com/startxfr/docker-images/blob/master/Services/apache/README.md)** for more information on how to use this image.
@@ -30,18 +30,20 @@ sleep 30 && oc get all
   ```
 - **Generate** your current application definition
   ```bash
+  export MYAPP=myapp
   oc process -n startx-example-apache -f startx-apache-build-template \
-      -p APP_NAME=myapp \
+      -p APP_NAME=${MYAPP} \
       -p APP_STAGE=example \
       -p BUILDER_TAG=latest \
       -p SOURCE_GIT=https://github.com/startxfr/docker-images-example-apache.git \
       -p SOURCE_BRANCH=master \
       -p MEMORY_LIMIT=256Mi \
-  > ./myapp.definitions.yml
+  > ./${MYAPP}.definitions.yml
   ```
+- **Review** your resources definition stored in `./${MYAPP}.definitions.yml`
 - **build and run** your application
   ```bash
-  oc create -f ./myapp.definitions.yml -n startx-example-apache
+  oc create -f ./${MYAPP}.definitions.yml -n startx-example-apache
   sleep 15 && oc get all
   ```
 - **Test** your application
